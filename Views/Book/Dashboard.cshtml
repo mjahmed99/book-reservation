@@ -1,0 +1,51 @@
+@model List<Book_Reservation.Models.Book>
+
+@{
+    ViewData["Title"] = "Your Reserved Books";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Your Reserved Books</h2>
+    @if (TempData["CancelMessage"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["CancelMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info">You have no reserved books at the moment.</div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var book in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@book.ImageUrl" class="card-img-top" alt="@book.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@book.Title</h5>
+                            <p class="card-text text-muted">by @book.Author</p>
+                            <p class="card-text"><strong>Genre:</strong> @book.Genre</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-sm btn-primary">View</a>
+                           <form asp-action="CancelReservation" asp-route-id="@book.Id" method="post" onsubmit="return confirm('Are you sure you want to cancel the reservation for @book.Title?');">
+                            <a asp-controller="Review" asp-action="Add" asp-route-bookId="@book.Id" class="btn btn-sm btn-secondary">Review</a>
+    <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
+
+</form>
+
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,26 @@
+﻿@model Book_Reservation.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card w-50 mx-auto mt-5">
+    <div class="card-body">
+        <h2 class="text-center">Login</h2>
+        <form asp-action="Login" method="post">
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input asp-for="Password" type="password" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <div class="text-center mt-2">
+                <a asp-action="SignUp" class="btn btn-link">Sign Up</a> | <a asp-action="ForgotPassword"
+                    class="btn btn-link">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
+</div>
